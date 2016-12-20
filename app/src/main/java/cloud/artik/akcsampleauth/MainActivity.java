@@ -8,7 +8,7 @@ import android.webkit.CookieManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-public class FullscreenActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     // OAUTH2 implicit (mobile) authentication information
     public static String accessToken = "";
@@ -18,7 +18,7 @@ public class FullscreenActivity extends AppCompatActivity {
     // ARTIK Cloud application informations
     public static final String AKC_BASE_URL = "https://accounts.artik.cloud";
     public static final String CLIENT_ID = "<YOUR CLIENT ID>";// AKA application id
-    public static final String REDIRECT_URI = "oauth2://redirect_url";
+    public static final String REDIRECT_URI = "http://example.com/redirect_url";
 
     // Webview thanks to which the authentication information is extracted
     public static WebView webView;
@@ -26,7 +26,7 @@ public class FullscreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fullscreen);
+        setContentView(R.layout.activity_main);
 
         webView = (WebView) findViewById(R.id.loginWebView);
         webView.getSettings().setJavaScriptEnabled(true);
@@ -46,15 +46,15 @@ public class FullscreenActivity extends AppCompatActivity {
                         // Extracts SAMI access token
                         String[] sArray = uri.split("access_token=");
                         String accessToken = sArray[1];
-                        FullscreenActivity.accessToken = accessToken.split("&")[0];
+                        MainActivity.accessToken = accessToken.split("&")[0];
 
                         sArray = uri.split("refresh_token=");
                         String refreshToken = sArray[1];
-                        FullscreenActivity.refreshToken = refreshToken.split("&")[0];
+                        MainActivity.refreshToken = refreshToken.split("&")[0];
 
                         sArray = uri.split("expires_in=");
                         String expiresIn = sArray[1];
-                        FullscreenActivity.expiresIn = expiresIn.split("&")[0];
+                        MainActivity.expiresIn = expiresIn.split("&")[0];
 
 
                         // TODO: Please start your new activity here.
@@ -98,7 +98,7 @@ public class FullscreenActivity extends AppCompatActivity {
 
     public void showAuthInfo() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("accessToken = " + FullscreenActivity.accessToken + "\n" + "refreshToken = " + FullscreenActivity.refreshToken + "\n" + "expiresIn = " + FullscreenActivity.expiresIn + "\n").setCancelable(false)
+        builder.setMessage("accessToken = " + MainActivity.accessToken + "\n" + "refreshToken = " + MainActivity.refreshToken + "\n" + "expiresIn = " + MainActivity.expiresIn + "\n").setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                     }
