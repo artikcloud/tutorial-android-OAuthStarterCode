@@ -1,4 +1,4 @@
-package cloud.artik.akcsampleauth;
+package cloud.artik.example.oauth;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     public static String refreshToken = "";
     public static String expiresIn = "";
 
-    // ARTIK Cloud application informations
+    // ARTIK Cloud application information
     public static final String AKC_BASE_URL = "https://accounts.artik.cloud";
     public static final String CLIENT_ID = "<YOUR CLIENT ID>";// AKA application id
     public static final String REDIRECT_URI = "http://example.com/redirect_url";
@@ -38,49 +38,45 @@ public class MainActivity extends AppCompatActivity {
              */
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String uri) {
-                // The login is successful
 
-                // the redirect_uri could be also localhost://
-                if (uri.startsWith(REDIRECT_URI)) {
-                    if (uri.contains("access_token=")) {
-                        // Extracts SAMI access token
-                        String[] sArray = uri.split("access_token=");
-                        String accessToken = sArray[1];
-                        MainActivity.accessToken = accessToken.split("&")[0];
+                // The login is successful or come back to login after finishing signup
+            if (uri.startsWith(REDIRECT_URI)) {
+                //login succeed
+                if (uri.contains("access_token=")) {
+                    // Example of uri: http://example.com/redirect_url#access_token=xxx&refresh_token=xxx&token_type=bearer&expires_in=1209600
+                    // Extracts access token
+                    String[] sArray = uri.split("access_token=");
+                    String accessToken = sArray[1];
+                    MainActivity.accessToken = accessToken.split("&")[0];
 
-                        sArray = uri.split("refresh_token=");
-                        String refreshToken = sArray[1];
-                        MainActivity.refreshToken = refreshToken.split("&")[0];
+                    sArray = uri.split("refresh_token=");
+                    String refreshToken = sArray[1];
+                    MainActivity.refreshToken = refreshToken.split("&")[0];
 
-                        sArray = uri.split("expires_in=");
-                        String expiresIn = sArray[1];
-                        MainActivity.expiresIn = expiresIn.split("&")[0];
+                    sArray = uri.split("expires_in=");
+                    String expiresIn = sArray[1];
+                    MainActivity.expiresIn = expiresIn.split("&")[0];
 
-
-                        // TODO: Please start your new activity here.
-                        // The OAUTH2 implicit authentication information is available
-                        // as static fields in the MainActivity class
-                        showAuthInfo();
-
-//                        Intent myIntent = new Intent(this, cloud.artik.XXXActivity.class);
-//                        this.startActivity(myIntent);
-
-                        return true;
-                    } else {
-                        // No access token available : display the main login page again
-                        // TODO: Please undertake the action you prefer
-                        eraseAuthentication();
-                        return true;
-                    }
+                    // TODO: Start your new activity here instead of showing the results of successful OAuth flow.
+                    // For example
+                    // Intent myIntent = new Intent(this, cloud.artik.XXXActivity.class);
+                    // this.startActivity(myIntent);
+                    showAuthInfo();
+                    return true;
                 }
-
+                else { // No access token available. Signup finishes and come back to the login page again
+                    // Example of uri: http://example.com/redirect_url?origin=signup&status=login_request
+                    //
+                    eraseAuthentication();
+                    return true;
+                }
+            }
 
                 return super.shouldOverrideUrlLoading(view, uri);
             }
         });
-        // Load the Samsung SAMI Accounts Login webpage
+        // Load the ARTIK Cloud Accounts Login webpage
         webView.loadUrl(getAuthorizationRequestUri());
-
     }
 
 
@@ -94,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
         CookieManager.getInstance().removeAllCookie();
         webView.loadUrl(getAuthorizationRequestUri());
     }
-
 
     public void showAuthInfo() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
