@@ -1,6 +1,16 @@
 # Android OAuth Starter Code
 
-Quick start code for making OAuth API call to get a user token from ARTIK Cloud
+This starter code shows how to make an OAuth call ([implicit method](https://developer.artik.cloud/documentation/introduction/authentication.html#implicit-method)) to get a [user token](https://developer.artik.cloud/documentation/introduction/authentication.html#user-token) from ARTIK Cloud.
+
+## Demo
+
+- Run the Android app. Sign in or sign up on the following screen:
+
+![GitHub Logo](./img/screenshot-signin-signup.png)
+
+- Receive the access token after login succeeds:
+
+![GitHub Logo](./img/screenshot-receive-accesstoken.png)
 
 ## Prerequisites
 * Android Studio
@@ -18,7 +28,6 @@ Follow [these instructions](https://developer.artik.cloud/documentation/tutorial
 
 ### Set up your Android project
 
-- Get the sample application Android project at <a href="https://github.com/artikcloud/tutorial-android-your-first-app" target="_blank">**GitHub**</a>
 - Change `CLIENT_ID` to your client ID (application ID) at the following line in `MainActivity.java`:
 
 ~~~java
@@ -38,17 +47,7 @@ public static final String REDIRECT_URI = "http://example.com/redirect_url";
 <data android:host="example.com/redirect_url" />
 ~~~
 
-- Build the Android project of the sample application.
-
-## Usage
-
-- Run the Android app. Sign in or sign up on the following screen:
-
-![GitHub Logo](./img/screenshot-signin-signup.png)
-
-- Receive the access token after login succeeds:
-
-![GitHub Logo](./img/screenshot-receive-accesstoken.png)
+- Build the Android project.
 
 ## More examples
 
