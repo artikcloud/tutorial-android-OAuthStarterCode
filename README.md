@@ -27,6 +27,13 @@ private static final String CLIENT_ID = "<YOUR CLIENT ID>";
 
 - Build the Android project of the sample application.
 
+## Usage
+
+- Run the Android app. Sign in or sign up on the following screen:
+![GitHub Logo](./img/screenshot-signin-signup.png)
+- Receive the access token after successfully logged in:
+![GitHub Logo](./img/screenshot-receive-accesstoken.png)
+
 ## More examples
 
 Peek into Andriod applications in [Tutorials](https://developer.artik.cloud/documentation/tutorials/) and [Samples](https://developer.artik.cloud/documentation/samples/) for more examples.
