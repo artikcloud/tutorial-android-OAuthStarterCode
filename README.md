@@ -1,2 +1,3 @@
-# tutorial-android-OAuthStarterCode
-quick start code for making OAuth2 API call to get a user token from ARTIK Cloud
+# Android OAuth Starter Code
+
+Quick start code for making OAuth API call to get a user token from ARTIK Cloud

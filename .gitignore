@@ -38,3 +38,14 @@ captures/
 
 # Keystore files
 *.jks
+
+# Android Studio
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+
+# Misc
+.DS_Store
+
+# libraries generated locally
+app/libs
