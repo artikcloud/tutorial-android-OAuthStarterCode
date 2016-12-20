@@ -3,7 +3,7 @@
 Quick start code for making OAuth API call to get a user token from ARTIK Cloud
 
 ## Prerequisites
-* Android Studio 2.2.3
+* Android Studio
 
 ## Setup / Installation:
 
@@ -19,10 +19,23 @@ Follow [these instructions](https://developer.artik.cloud/documentation/tutorial
 ### Set up your Android project
 
 - Get the sample application Android project at <a href="https://github.com/artikcloud/tutorial-android-your-first-app" target="_blank">**GitHub**</a>
-- Change `CLIENT_ID`{:.param} to your client ID (application ID) at the following line in `MainActivity.java` of the sample application:
+- Change `CLIENT_ID` to your client ID (application ID) at the following line in `MainActivity.java`:
 
-~~~html
+~~~java
 private static final String CLIENT_ID = "<YOUR CLIENT ID>";
+~~~
+
+- Make sure `REDIRECT_URI` at the following line in `MainActivity.java` is consistent with "Redirect URL" for your application at the Developer Dashboard:
+
+~~~java
+public static final String REDIRECT_URI = "http://example.com/redirect_url";
+~~~
+
+- Make sure the intent filter fields at the following lines in `AndroidManifest.xml` respect "Redirect URL" for your application at the Developer Dashboard:
+
+~~~xml
+<data android:scheme="http" />
+<data android:host="example.com/redirect_url" />
 ~~~
 
 - Build the Android project of the sample application.
@@ -30,8 +43,11 @@ private static final String CLIENT_ID = "<YOUR CLIENT ID>";
 ## Usage
 
 - Run the Android app. Sign in or sign up on the following screen:
+
 ![GitHub Logo](./img/screenshot-signin-signup.png)
-- Receive the access token after successfully logged in:
+
+- Receive the access token after login succeeds:
+
 ![GitHub Logo](./img/screenshot-receive-accesstoken.png)
 
 ## More examples

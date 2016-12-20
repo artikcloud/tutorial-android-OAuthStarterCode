@@ -17,9 +17,8 @@ public class MainActivity extends AppCompatActivity {
 
     // ARTIK Cloud application information
     public static final String AKC_BASE_URL = "https://accounts.artik.cloud";
-    public static final String CLIENT_ID = "<YOUR CLIENT ID>";// AKA application id
-    public static final String REDIRECT_URI = "http://example.com/redirect_url";
-
+    public static final String CLIENT_ID = "<YOUR CLIENT ID>"; //AKA application id
+    public static final String REDIRECT_URI = "http://example.com/redirect_url"; // MUST be consistent with "AUTH REDIRECT URL" of your application set up at the developer.artik.cloud
     // Webview thanks to which the authentication information is extracted
     public static WebView webView;
 

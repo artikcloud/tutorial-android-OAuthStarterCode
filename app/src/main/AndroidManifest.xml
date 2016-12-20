@@ -23,8 +23,16 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
+                <!--
+                    Make sure these two intent filter fields respects "AUTH REDIRECT URL"
+                    of your application set up at the developer.artik.cloud.
+                    For example, if REDIRECT URL is "http://example.com/redirect_url",
+                    the intent-filter fields looks like the following
+                -->
                 <data android:scheme="http" />
                 <data android:host="example.com/redirect_url" />
+
             </intent-filter>
         </activity>
     </application>
