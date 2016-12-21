@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     // ARTIK Cloud application information
     public static final String AKC_BASE_URL = "https://accounts.artik.cloud";
-    public static final String CLIENT_ID = "<YOUR CLIENT ID>"; //AKA application id
+    public static final String CLIENT_ID = "<YOUR CLIENT ID>";// AKA application id
     public static final String REDIRECT_URI = "http://example.com/redirect_url"; // MUST be consistent with "AUTH REDIRECT URL" of your application set up at the developer.artik.cloud
     // Webview thanks to which the authentication information is extracted
     public static WebView webView;
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String uri) {
 
-                // The login is successful or come back to login after finishing signup
+                //// Login succeed or back to login after signup
             if (uri.startsWith(REDIRECT_URI)) {
                 //login succeed
                 if (uri.contains("access_token=")) {
@@ -61,14 +61,13 @@ public class MainActivity extends AppCompatActivity {
                     // Intent myIntent = new Intent(this, cloud.artik.XXXActivity.class);
                     // this.startActivity(myIntent);
                     showAuthInfo();
-                    return true;
                 }
-                else { // No access token available. Signup finishes and come back to the login page again
+                else { // No access token available. Signup finish and user clicks "Back to login"
                     // Example of uri: http://example.com/redirect_url?origin=signup&status=login_request
                     //
-                    eraseAuthentication();
-                    return true;
+                    eraseAuthThenLogin();
                 }
+                return true;
             }
 
                 return super.shouldOverrideUrlLoading(view, uri);
@@ -84,8 +83,7 @@ public class MainActivity extends AppCompatActivity {
         return AKC_BASE_URL + "/authorize?client=mobile&response_type=token&client_id=" + CLIENT_ID;
     }
 
-    public static void eraseAuthentication() {
-        CookieManager cookieManager = CookieManager.getInstance();
+    public static void eraseAuthThenLogin() {
         CookieManager.getInstance().removeAllCookie();
         webView.loadUrl(getAuthorizationRequestUri());
     }
