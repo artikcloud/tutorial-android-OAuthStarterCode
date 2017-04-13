@@ -14,10 +14,8 @@ public class Config {
      * Stay tuned for improving this sample to use AC+PKCE
      */
     // Replace the following entries with your own settings:
-//    public static final String CLIENT_ID = "YOUR_ARTIKCLOUD_CLIENT_ID";
-//    public static final String CLIENT_SECRET = "YOUR_ARTIKCLOUD_CLIENT_SECRET";
-    public static final String CLIENT_ID = "1dbb047b36c247f383db3e3b89731cd1";
-    public static final String CLIENT_SECRET = "e16937b979a74590ae9d4ce6d704bcb2";
+    public static final String CLIENT_ID = "YOUR_CLIENT_ID";
+    public static final String CLIENT_SECRET = "YOUR_CLIENT_SECRET";
 
     // MUST be consistent with "AUTH REDIRECT URL" of your application set up at the developer.artik.cloud
     public static final String REDIRECT_URI = "cloud.artik.example.oauth://oauth2callback";
