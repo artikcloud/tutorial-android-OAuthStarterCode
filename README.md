@@ -1,10 +1,14 @@
 # Android OAuth Starter Code
 
-This starter code shows how to make an OAuth call ([implicit method](https://developer.artik.cloud/documentation/introduction/authentication.html#implicit-method)) to get a [user token](https://developer.artik.cloud/documentation/introduction/authentication.html#user-token) from ARTIK Cloud.
+This starter code shows how to make an OAuth call ([Authorization Code method](https://developer.artik.cloud/documentation/getting-started/authentication.html#authorization-code-method) to get a [user token](https://developer.artik.cloud/documentation/introduction/authentication.html#user-token) from ARTIK Cloud.
+
+**Stay tuned for improving this sample to use Authorization Code + PKCE, which follows the best practices for native application OAuth.**
 
 ## Demo
 
-- Run the Android app. Sign in or sign up on the following screen:
+- Run the Android app. 
+- Click Login button.
+- Sign in or sign up on the following screen:
 
 ![GitHub Logo](./img/screenshot-signin-signup.png)
 
@@ -21,30 +25,36 @@ This starter code shows how to make an OAuth call ([implicit method](https://dev
 
 Follow [these instructions](https://developer.artik.cloud/documentation/tutorials/your-first-application.html#create-an-application) to create an application using the Developer Dashboard. For this tutorial, select the following:
 
-- Set "Redirect URL" for your application to `http://example.com/redirect_url`.
-- Choose "Client Credentials, auth code, implicit".
+- Set "Redirect URL" for your application to `cloud.artik.example.oauth://oauth2callback`.
+- Choose "Client Credentials, auth code".
 
-[Make a note of your client ID.](https://developer.artik.cloud/documentation/tools/web-tools.html#how-to-find-your-application-id) This is your application ID, which you will need in the next step.
+[Make a note of your client ID and client secret.](https://developer.artik.cloud/documentation/tools/web-tools.html#how-to-find-your-application-id), which you will need in the next step.
 
 ### Set up your Android project
 
-- Change `CLIENT_ID` to your client ID (application ID) at the following line in `MainActivity.java`:
+- Change `CLIENT_ID` and `CLIENT_SECRET` to your own client ID (application ID) and secret at the following lines in `Config.java`:
 
 ~~~java
-private static final String CLIENT_ID = "<YOUR CLIENT ID>";
+private static final String CLIENT_ID = "YOUR_CLIENT_ID";
+private static final String CLIENT_SECRET = "YOUR_CLIENT_SECRET";
 ~~~
 
-- Make sure `REDIRECT_URI` at the following line in `MainActivity.java` is consistent with "Redirect URL" for your application at the Developer Dashboard:
+- Make sure `REDIRECT_URI` at the following line in `Config.java` is consistent with "Redirect URL" for your application at the Developer Dashboard:
 
 ~~~java
-public static final String REDIRECT_URI = "http://example.com/redirect_url";
+public static final String REDIRECT_URI = "cloud.artik.example.oauth://oauth2callback";
 ~~~
 
-- Make sure the intent filter fields at the following lines in `AndroidManifest.xml` respect "Redirect URL" for your application at the Developer Dashboard:
+- Make sure the intent filter field at the following line in `AndroidManifest.xml` respects "Redirect URL" for your application at the Developer Dashboard:
 
 ~~~xml
-<data android:scheme="http" />
-<data android:host="example.com/redirect_url" />
+<data android:scheme="cloud.artik.example.oauth" android:host="oauth2callback"/>
+~~~
+
+- Make sure the `manifestPlaceholders` at the following line in `build.gradle` under app directory respects "Redirect URL" for your application at the Developer Dashboard:
+
+~~~
+manifestPlaceholders = [appAuthRedirectScheme: "cloud.artik.example.oauth://oauth2callback"]
 ~~~
 
 - Build the Android project.
@@ -69,4 +79,4 @@ License and Copyright
 
 Licensed under the Apache License. See [LICENSE](LICENSE).
 
-Copyright (c) 2016 Samsung Electronics Co., Ltd.
+Copyright (c) 2017 Samsung Electronics Co., Ltd.
