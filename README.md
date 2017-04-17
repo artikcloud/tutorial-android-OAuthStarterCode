@@ -1,8 +1,8 @@
 # Android OAuth Starter Code
 
-This starter code shows how to make an OAuth call ([Authorization Code method](https://developer.artik.cloud/documentation/getting-started/authentication.html#authorization-code-method) to get a [user token](https://developer.artik.cloud/documentation/introduction/authentication.html#user-token) from ARTIK Cloud.
+This starter code shows how to make an OAuth call to get a [user token](https://developer.artik.cloud/documentation/introduction/authentication.html#user-token) from ARTIK Cloud. It uses [AppAuth for Android](http://openid.github.io/AppAuth-Android/)(an open source OAuth client library) instead of the WebView UI element for improved security. The implemented OAuth method is [Authorization Code method](https://developer.artik.cloud/documentation/getting-started/authentication.html#authorization-code-method).
 
-**Stay tuned for improving this sample to use Authorization Code + PKCE, which follows the best practices for native application OAuth.**
+**Stay tuned for the improved version of this sample. The newer version will implement Authorization Code + PKCE by following the best practices for native applications.**
 
 ## Demo
 

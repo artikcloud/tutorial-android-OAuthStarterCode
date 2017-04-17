@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
 
         authorizationService = new AuthorizationService(this);
         authStateDAL = new AuthStateDAL(this);
-        buttonSignIn = (Button) findViewById(R.id.btnSignIn);
+        buttonSignIn = (Button) findViewById(R.id.btn_login);
         buttonSignIn.setOnClickListener(new Button.OnClickListener() {
 
             @Override
