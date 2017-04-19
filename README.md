@@ -18,6 +18,7 @@ This starter code shows how to make an OAuth call to get a [user token](https://
 
 ## Prerequisites
 * Android Studio
+* Android SDK for API level 24
 
 ## Setup / Installation:
 
@@ -45,13 +46,13 @@ private static final String CLIENT_SECRET = "YOUR_CLIENT_SECRET";
 public static final String REDIRECT_URI = "cloud.artik.example.oauth://oauth2callback";
 ~~~
 
-- Make sure the intent filter field at the following line in `AndroidManifest.xml` respects "Redirect URL" for your application at the Developer Dashboard:
+- Make sure the `intent-filter` field for `net.openid.appauth.RedirectUriReceiverActivity` in `AndroidManifest.xml` respects "Redirect URL" for your application at the Developer Dashboard:
 
 ~~~xml
 <data android:scheme="cloud.artik.example.oauth" android:host="oauth2callback"/>
 ~~~
 
-- Make sure the `manifestPlaceholders` at the following line in `build.gradle` under app directory respects "Redirect URL" for your application at the Developer Dashboard:
+- Make sure the `appAuthRedirectScheme` at the following line in `build.gradle` (Module: app) respects "Redirect URL" for your application at the Developer Dashboard:
 
 ~~~
 manifestPlaceholders = [appAuthRedirectScheme: "cloud.artik.example.oauth://oauth2callback"]
