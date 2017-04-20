@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public static String accessToken = "";
     public static String refreshToken = "";
-    public static String expiresIn = "";
+    public static String expiresAt = "";
 
     Button buttonSignIn;
 
@@ -85,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
                 new Intent(INTENT_ARTIKCLOUD_AUTHORIZATION_RESPONSE, null, this, LoginActivity.class),
                 0);
 
-                /* request sample with custom tabs */
+        /* request sample with custom tabs */
         CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
         CustomTabsIntent customTabsIntent = builder.build();
 
@@ -151,10 +151,10 @@ public class LoginActivity extends AppCompatActivity {
                         if (tokenResponse != null) {
                             authState.update(tokenResponse, exception);
                             authStateDAL.writeAuthState(authState);
-                            String text = String.format("Token Response [ Access Token: %s ]", tokenResponse.accessToken);
+                            String text = String.format("Received token response [%s]", tokenResponse.jsonSerializeString());
                             Log.i(LoginActivity.LOG_TAG, text);
                             accessToken = tokenResponse.accessToken;
-                            expiresIn = tokenResponse.accessTokenExpirationTime.toString();
+                            expiresAt = tokenResponse.accessTokenExpirationTime.toString();
                             refreshToken = tokenResponse.refreshToken;
                             showAuthInfo();
                         } else {
@@ -186,13 +186,11 @@ public class LoginActivity extends AppCompatActivity {
 
     public void showAuthInfo() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("accessToken = " + LoginActivity.accessToken + "\n" + "refreshToken = " + LoginActivity.refreshToken + "\n" + "expiresIn = " + LoginActivity.expiresIn + "\n").setCancelable(false)
+        builder.setMessage("accessToken = " + LoginActivity.accessToken + "\n" + "refreshToken = " + LoginActivity.refreshToken + "\n" + "expiresAt = " + LoginActivity.expiresAt + "\n").setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                     }
                 }).show();
-
-
     }
 }
 
