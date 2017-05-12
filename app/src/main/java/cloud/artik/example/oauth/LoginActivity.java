@@ -52,7 +52,6 @@ public class LoginActivity extends AppCompatActivity {
     public static final String LOG_TAG = "LoginActivity";
 
     AuthorizationService authorizationService;
-    AuthStateDAL authStateDAL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +60,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         authorizationService = new AuthorizationService(this);
-        authStateDAL = new AuthStateDAL(this);
         buttonSignIn = (Button) findViewById(R.id.btn_login);
         buttonSignIn.setOnClickListener(new Button.OnClickListener() {
 
@@ -150,7 +148,6 @@ public class LoginActivity extends AppCompatActivity {
                     public void onTokenRequestCompleted(@Nullable TokenResponse tokenResponse, @Nullable AuthorizationException exception) {
                         if (tokenResponse != null) {
                             authState.update(tokenResponse, exception);
-                            authStateDAL.writeAuthState(authState);
                             String text = String.format("Received token response [%s]", tokenResponse.jsonSerializeString());
                             Log.i(LoginActivity.LOG_TAG, text);
                             accessToken = tokenResponse.accessToken;

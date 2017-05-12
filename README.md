@@ -8,6 +8,9 @@ This starter code shows how to make an OAuth call to get a [user token](https://
 
 - Run the Android app. 
 - Click Login button.
+
+![GitHub Logo](./img/screenshot-login-btn.png)
+
 - Sign in or sign up on the following screen:
 
 ![GitHub Logo](./img/screenshot-signin-signup.png)
