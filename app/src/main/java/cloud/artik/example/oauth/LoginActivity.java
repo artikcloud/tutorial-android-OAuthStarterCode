@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(LoginActivity.LOG_TAG, "Entering onCreate ...");
+        Log.d(LOG_TAG, "Entering onCreate ...");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -96,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
-        Log.d(LoginActivity.LOG_TAG, "Entering onStart ...");
+        Log.d(LOG_TAG, "Entering onStart ...");
         super.onStart();
         checkIntent(getIntent());
     }
@@ -108,12 +108,12 @@ public class LoginActivity extends AppCompatActivity {
 
     private void checkIntent(@Nullable Intent intent) {
 
-        Log.d(LoginActivity.LOG_TAG, "Entering checkIntent ...");
+        Log.d(LOG_TAG, "Entering checkIntent ...");
         if (intent != null) {
             String action = intent.getAction();
             switch (action) {
                 case INTENT_ARTIKCLOUD_AUTHORIZATION_RESPONSE:
-                    Log.d(LoginActivity.LOG_TAG, "checkIntent action = " + action
+                    Log.d(LOG_TAG, "checkIntent action = " + action
                             + " intent.hasExtra(USED_INTENT) = " + intent.hasExtra(USED_INTENT));
                     if (!intent.hasExtra(USED_INTENT)) {
                         handleAuthorizationResponse(intent);
@@ -121,11 +121,11 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     break;
                 default:
-                    Log.w(LoginActivity.LOG_TAG, "checkIntent action = " + action);
+                    Log.w(LOG_TAG, "checkIntent action = " + action);
                     // do nothing
             }
         } else {
-            Log.w(LoginActivity.LOG_TAG, "checkIntent intent is null!");
+            Log.w(LOG_TAG, "checkIntent intent is null!");
         }
     }
 
@@ -133,14 +133,14 @@ public class LoginActivity extends AppCompatActivity {
 
         AuthorizationResponse response = AuthorizationResponse.fromIntent(intent);
         AuthorizationException error = AuthorizationException.fromIntent(intent);
-        Log.i(LoginActivity.LOG_TAG, "Entering handleAuthorizationResponse with response from Intent = " + response.jsonSerialize().toString());
+        Log.i(LOG_TAG, "Entering handleAuthorizationResponse with response from Intent = " + response.jsonSerialize().toString());
 
         if (response != null) {
 
             if (response.authorizationCode != null ) { // Authorization Code method: succeeded to get code
 
                 final AuthState authState = new AuthState(response, error);
-                Log.i(LoginActivity.LOG_TAG, "Received code = " + response.authorizationCode + "\n make another call to get token ...");
+                Log.i(LOG_TAG, "Received code = " + response.authorizationCode + "\n make another call to get token ...");
 
                 // File 2nd call in Authorization Code method to get the token
                 authorizationService.performTokenRequest(response.createTokenExchangeRequest(), new AuthorizationService.TokenResponseCallback() {
@@ -150,14 +150,14 @@ public class LoginActivity extends AppCompatActivity {
                             authState.update(tokenResponse, exception);
                             authStateDAL.writeAuthState(authState); //store into persistent storage for use later
                             String text = String.format("Received token response [%s]", tokenResponse.jsonSerializeString());
-                            Log.i(LoginActivity.LOG_TAG, text);
+                            Log.i(LOG_TAG, text);
                             accessToken = tokenResponse.accessToken;
                             expiresAt = tokenResponse.accessTokenExpirationTime.toString();
                             refreshToken = tokenResponse.refreshToken;
                             showAuthInfo();
                         } else {
                             Context context = getApplicationContext();
-                            Log.w(LoginActivity.LOG_TAG, "Token Exchange failed", exception);
+                            Log.w(LOG_TAG, "Token Exchange failed", exception);
                             CharSequence text = "Token Exchange failed";
                             int duration = Toast.LENGTH_LONG;
                             Toast toast = Toast.makeText(context, text, duration);
@@ -166,25 +166,25 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
             } else { // come here w/o authorization code. For example, signup finish and user clicks "Back to login"
-                Log.d(LoginActivity.LOG_TAG, "additionalParameter = " + response.additionalParameters.toString());
+                Log.d(LOG_TAG, "additionalParameter = " + response.additionalParameters.toString());
 
                 if (response.additionalParameters.get("status").equalsIgnoreCase("login_request")) {
                     // ARTIK Cloud instructs the app to display a sign-in form
                     doAuth();
                 } else {
-                    Log.d(LoginActivity.LOG_TAG, response.jsonSerialize().toString());
+                    Log.d(LOG_TAG, response.jsonSerialize().toString());
                 }
             }
 
         } else {
-            Log.w(LoginActivity.LOG_TAG, "Authorization Response is null ");
-            Log.d(LoginActivity.LOG_TAG, "Authorization Exception = " + error);
+            Log.w(LOG_TAG, "Authorization Response is null ");
+            Log.d(LOG_TAG, "Authorization Exception = " + error);
         }
     }
 
     public void showAuthInfo() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("accessToken = " + LoginActivity.accessToken + "\n" + "refreshToken = " + LoginActivity.refreshToken + "\n" + "expiresAt = " + LoginActivity.expiresAt + "\n").setCancelable(false)
+        builder.setMessage("accessToken = " + accessToken + "\n" + "refreshToken = " + refreshToken + "\n" + "expiresAt = " + expiresAt + "\n").setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                     }
