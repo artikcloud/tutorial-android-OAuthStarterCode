@@ -1,15 +1,19 @@
-/**
- * Sample AppAuth implementation for Logging into ARTIK Cloud.
- * https://github.com/openid/AppAuth-Android
+/*
+ * Copyright (C) 2017 Samsung Electronics Co., Ltd.
  *
- * IMPORTANT:  This sample application, for demonstration purposes embeds the client
- * secret to perform a 'code' exchange.  The code exchange should occur on your
- * protected server protecting your client secret.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * Please follow IETF best practice for Oauth2.0
- * https://tools.ietf.org/html/rfc7636#section-4.4
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
+
 package cloud.artik.example.oauth;
 
 import android.app.PendingIntent;
@@ -34,9 +38,6 @@ import net.openid.appauth.AuthorizationResponse;
 import net.openid.appauth.AuthorizationService;
 import net.openid.appauth.TokenResponse;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static cloud.artik.example.oauth.AuthHelper.INTENT_ARTIKCLOUD_AUTHORIZATION_RESPONSE;
 import static cloud.artik.example.oauth.AuthHelper.USED_INTENT;
 
@@ -49,9 +50,10 @@ public class LoginActivity extends AppCompatActivity {
 
     Button buttonSignIn;
 
-    public static final String LOG_TAG = "LoginActivity";
+    static final String LOG_TAG = "LoginActivity";
 
     AuthorizationService authorizationService;
+    AuthStateDAL authStateDAL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +72,7 @@ public class LoginActivity extends AppCompatActivity {
 
         });
 
+        authStateDAL = new AuthStateDAL(this);
     }
 
     // File OAuth call with Authorization Code method
@@ -139,15 +142,13 @@ public class LoginActivity extends AppCompatActivity {
                 final AuthState authState = new AuthState(response, error);
                 Log.i(LoginActivity.LOG_TAG, "Received code = " + response.authorizationCode + "\n make another call to get token ...");
 
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("client_secret", Config.CLIENT_SECRET);
-
-                // file 2nd call in Authorization Code method to get the token
-                authorizationService.performTokenRequest(response.createTokenExchangeRequest(params), new AuthorizationService.TokenResponseCallback() {
+                // File 2nd call in Authorization Code method to get the token
+                authorizationService.performTokenRequest(response.createTokenExchangeRequest(), new AuthorizationService.TokenResponseCallback() {
                     @Override
                     public void onTokenRequestCompleted(@Nullable TokenResponse tokenResponse, @Nullable AuthorizationException exception) {
                         if (tokenResponse != null) {
                             authState.update(tokenResponse, exception);
+                            authStateDAL.writeAuthState(authState); //store into persistent storage for use later
                             String text = String.format("Received token response [%s]", tokenResponse.jsonSerializeString());
                             Log.i(LoginActivity.LOG_TAG, text);
                             accessToken = tokenResponse.accessToken;

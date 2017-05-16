@@ -1,26 +1,25 @@
+/*
+ * Copyright (C) 2017 Samsung Electronics Co., Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package cloud.artik.example.oauth;
 
-public class Config {
-
-    /**
-     * IMPORTANT:  This sample application, for demonstration purposes embeds the client
-     * secret below to perform a 'code' exchange.
-     *
-     * To follow IETF best practice for Oauth2.0, native client should implement
-     * Authorization Code method + PKCE
-     *
-     * https://tools.ietf.org/html/rfc7636#section-4.4
-     *
-     * Stay tuned for improving this sample to use AC+PKCE
-     */
-    // Replace the following entries with your own settings:
-    public static final String CLIENT_ID = "YOUR_CLIENT_ID";
-    public static final String CLIENT_SECRET = "YOUR_CLIENT_SECRET";
+class Config {
+    static final String CLIENT_ID = "YOUR_CLIENT_ID";
 
     // MUST be consistent with "AUTH REDIRECT URL" of your application set up at the developer.artik.cloud
-    public static final String REDIRECT_URI = "cloud.artik.example.oauth://oauth2callback";
+    static final String REDIRECT_URI = "cloud.artik.example.oauth://oauth2callback";
 
-    // You should not change the following
-    public static final String ARTIKCLOUD_AUTHORIZE_URI = "https://accounts.artik.cloud/signin";
-    public static final String ARTIKCLOUD_TOKEN_URI = "https://accounts.artik.cloud/token";
 }
