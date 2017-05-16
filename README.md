@@ -1,8 +1,6 @@
 # Android OAuth Starter Code
 
-This starter code shows how to make an OAuth call to get a [user token](https://developer.artik.cloud/documentation/introduction/authentication.html#user-token) from ARTIK Cloud. It uses [AppAuth for Android](http://openid.github.io/AppAuth-Android/)(an open source OAuth client library) instead of the WebView UI element for improved security. The implemented OAuth method is [Authorization Code method](https://developer.artik.cloud/documentation/getting-started/authentication.html#authorization-code-method).
-
-**Stay tuned for the improved version of this sample. The newer version will implement Authorization Code + PKCE by following the best practices for native applications.**
+This starter code shows how to make an OAuth call to get a [user token](https://developer.artik.cloud/documentation/introduction/authentication.html#user-token) from ARTIK Cloud. It uses [AppAuth for Android](http://openid.github.io/AppAuth-Android/)(an open source OAuth client library) instead of the WebView UI element for improved security. The implemented OAuth method is [Authorization Code with PKCE](https://developer.artik.cloud/documentation/getting-started/authentication.html#authorization-code-method).
 
 ## Demo
 
@@ -30,17 +28,16 @@ This starter code shows how to make an OAuth call to get a [user token](https://
 Follow [these instructions](https://developer.artik.cloud/documentation/tutorials/your-first-application.html#create-an-application) to create an application using the Developer Dashboard. For this tutorial, select the following:
 
 - Set "Redirect URL" for your application to `cloud.artik.example.oauth://oauth2callback`.
-- Choose "Client Credentials, auth code".
+- Under Authentication, **only check "Authorization Code with PKCE" as AUTH METHODS**. 
 
 [Make a note of your client ID and client secret.](https://developer.artik.cloud/documentation/tools/web-tools.html#how-to-find-your-application-id), which you will need in the next step.
 
 ### Set up your Android project
 
-- Change `CLIENT_ID` and `CLIENT_SECRET` to your own client ID (application ID) and secret at the following lines in `Config.java`:
+- Change `CLIENT_ID` to your own client ID (application ID) at the following lines in `Config.java`:
 
 ~~~java
 private static final String CLIENT_ID = "YOUR_CLIENT_ID";
-private static final String CLIENT_SECRET = "YOUR_CLIENT_SECRET";
 ~~~
 
 - Make sure `REDIRECT_URI` at the following line in `Config.java` is consistent with "Redirect URL" for your application at the Developer Dashboard:
