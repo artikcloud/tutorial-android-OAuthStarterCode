@@ -30,7 +30,7 @@ Follow [these instructions](https://developer.artik.cloud/documentation/tutorial
 - Set "Redirect URL" for your application to `cloud.artik.example.oauth://oauth2callback`.
 - Under Authentication, **only check "Authorization Code with PKCE" as AUTH METHODS**. 
 
-[Make a note of your client ID and client secret.](https://developer.artik.cloud/documentation/tools/web-tools.html#how-to-find-your-application-id), which you will need in the next step.
+[Make a note of your client ID](https://developer.artik.cloud/documentation/tools/web-tools.html#how-to-find-your-application-id), which you will need in the next step.
 
 ### Set up your Android project
 

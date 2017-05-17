@@ -48,12 +48,12 @@ public class LoginActivity extends AppCompatActivity {
     public static String refreshToken = "";
     public static String expiresAt = "";
 
-    Button buttonSignIn;
+    Button mButtonSignIn;
 
     static final String LOG_TAG = "LoginActivity";
 
-    AuthorizationService authorizationService;
-    AuthStateDAL authStateDAL;
+    AuthorizationService mAuthorizationService;
+    AuthStateDAL mAuthStateDAL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +61,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        authorizationService = new AuthorizationService(this);
-        buttonSignIn = (Button) findViewById(R.id.btn_login);
-        buttonSignIn.setOnClickListener(new Button.OnClickListener() {
+        mAuthorizationService = new AuthorizationService(this);
+        mButtonSignIn = (Button) findViewById(R.id.btn_login);
+        mButtonSignIn.setOnClickListener(new Button.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
 
         });
 
-        authStateDAL = new AuthStateDAL(this);
+        mAuthStateDAL = new AuthStateDAL(this);
     }
 
     // File OAuth call with Authorization Code method
@@ -90,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
         CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
         CustomTabsIntent customTabsIntent = builder.build();
 
-        authorizationService.performAuthorizationRequest(authorizationRequest, authorizationIntent, customTabsIntent);
+        mAuthorizationService.performAuthorizationRequest(authorizationRequest, authorizationIntent, customTabsIntent);
 
     }
 
@@ -143,12 +143,12 @@ public class LoginActivity extends AppCompatActivity {
                 Log.i(LOG_TAG, "Received code = " + response.authorizationCode + "\n make another call to get token ...");
 
                 // File 2nd call in Authorization Code method to get the token
-                authorizationService.performTokenRequest(response.createTokenExchangeRequest(), new AuthorizationService.TokenResponseCallback() {
+                mAuthorizationService.performTokenRequest(response.createTokenExchangeRequest(), new AuthorizationService.TokenResponseCallback() {
                     @Override
                     public void onTokenRequestCompleted(@Nullable TokenResponse tokenResponse, @Nullable AuthorizationException exception) {
                         if (tokenResponse != null) {
                             authState.update(tokenResponse, exception);
-                            authStateDAL.writeAuthState(authState); //store into persistent storage for use later
+                            mAuthStateDAL.writeAuthState(authState); //store into persistent storage for use later
                             String text = String.format("Received token response [%s]", tokenResponse.jsonSerializeString());
                             Log.i(LOG_TAG, text);
                             accessToken = tokenResponse.accessToken;
